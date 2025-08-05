@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ダウンロード</title>
+    <link rel="stylesheet" href="Index.css" />
+  </head>
+  <body onload="Download()">
+    ダウンロードが開始されない場合は<a class="download" href="DownloadBlob/AutoEditor-APS-Setup.exe" download="AutoEditor-APS-Setup.exe">ここをクリック</a>してください。
+    <button id="openDialog">寄付</button>
+    <dialog>
+      <div class="titlebar" id="dragArea">
+        <div class="buttons">
+          <span class="btn close"></span>
+          <span class="btn minimize"></span>
+          <span class="btn maximize"></span>
+        </div>
+        <span class="title">寄付</span>
+      </div>
+      <p>何円寄付しますか？</p>
+      <br /><button style="background: green; color: white">10円</button>
+      <br /><button style="background: gray; color: white">30円</button>
+      <br /><button style="background: gainsboro; color: black">60円</button>
+      <br /><button style="background: orangered; color: white">1000円</button>
+      <br /><button style="background-color: red">5000円</button> <br /><a
+        href="#"
+        onclick="ShowDonate()"
+        class="DonateShow"
+        >表示数を増やす（高価な寄付）</a
+      >
+      <div class="Donate" style="display: none">
+        <br /><button style="background-color: brown; color: white">
+          10000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          20000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          30000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          40000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          50000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          60000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          70000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          80000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          90000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          10,0000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          20,0000円
+        </button>
+        <br /><button style="background-color: brown; color: white">
+          30,0000円</button
+        >※最大
+      </div>
+      <div class="resize-handle" id="resizeHandle"></div>
+    </dialog>
+    <script>
+      const resizeHandle = document.getElementById("resizeHandle");
+      const Donate = document.querySelector(".Donate");
+      const DonateShow = document.querySelector(".DonateShow");
+      const dialog = document.querySelector("dialog");
+      const openBtn = document.getElementById("openDialog");
+      const closeBtn = document.querySelector(".close");
+      const minimizeBtn = document.querySelector(".minimize");
+      const maximizeBtn = document.querySelector(".maximize");
+
+      function ShowDonate() {
+        if (DonateShow.textContent === "表示数を増やす（高価な寄付）") {
+          DonateShow.textContent = "表示数を減らす（安い寄付）";
+          Donate.style.display = "block";
+        } else {
+          DonateShow.textContent = "表示数を増やす（高価な寄付）";
+          Donate.style.display = "none";
+        }
+      }
+
+      openBtn.onclick = () => dialog.showModal();
+
+      let isMaximized = false;
+      let previousSize = { width: 0, height: 0, left: 0, top: 0 };
+
+      // 閉じる
+      closeBtn.onclick = () => dialog.close();
+
+      // 最小化（非表示にする）
+      minimizeBtn.onclick = () => {
+        dialog.style.display = "none";
+        // 再表示ボタンを出す（任意）
+        const reopen = document.createElement("button");
+        reopen.textContent = "再表示";
+        reopen.id = "reopenBtn";
+        document.body.appendChild(reopen);
+
+        reopen.onclick = () => {
+          dialog.style.display = "block";
+          reopen.remove();
+        };
+      };
+
+      // 最大化・元に戻す切替
+      maximizeBtn.onclick = () => {
+        if (!isMaximized) {
+          // 保存
+          const rect = dialog.getBoundingClientRect();
+          previousSize = {
+            width: rect.width,
+            height: rect.height,
+            left: rect.left,
+            top: rect.top,
+          };
+          // 最大化
+          dialog.style.width = "100vw";
+          dialog.style.height = "100vh";
+          dialog.style.left = "0px";
+          dialog.style.top = "0px";
+          isMaximized = true;
+        } else {
+          // 元に戻す
+          dialog.style.width = `${previousSize.width}px`;
+          dialog.style.height = `${previousSize.height}px`;
+          dialog.style.left = `${previousSize.left}px`;
+          dialog.style.top = `${previousSize.top}px`;
+          isMaximized = false;
+        }
+      };
+      let resizing = false;
+      let startX, startY, startWidth, startHeight;
+
+      resizeHandle.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        resizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        const rect = dialog.getBoundingClientRect();
+        startWidth = rect.width;
+        startHeight = rect.height;
+      });
+
+      document.addEventListener("mousemove", (e) => {
+        if (resizing) {
+          const newWidth = startWidth + (e.clientX - startX);
+          const newHeight = startHeight + (e.clientY - startY);
+          dialog.style.width = `${newWidth}px`;
+          dialog.style.height = `${newHeight}px`;
+        }
+      });
+
+      document.addEventListener("mouseup", () => {
+        resizing = false;
+      });
+      function Download(){
+        document.querySelector(".download").click();
+      }
+    </script>
+  </body>
+</html>

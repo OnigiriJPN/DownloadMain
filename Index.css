@@ -1,0 +1,70 @@
+*{
+    cursor: url("Mac.cur"), auto;
+}
+button{
+    cursor: url("Click2.cur"), auto;
+}
+button:hover{
+    background: cyan;
+    border: none;
+}
+button:active{
+    opacity: 0.3;
+}
+a{
+    cursor: url("Click.cur"), auto;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #f0f0f0;
+  padding: 2rem;
+}
+
+dialog {
+  width: 400px;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 150px;
+  left: 150px;
+}
+
+.titlebar {
+  background: #e0e0e0;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  cursor: url("Mac.cur");
+  user-select: none;
+}
+
+.titlebar .buttons {
+  display: flex;
+  gap: 6px;
+  margin-right: 10px;
+}
+
+.btn {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.close { background: #ff5f57; }
+.minimize { background: #ffbd2e; }
+.maximize { background: #28c840; }
+
+.title {
+  font-weight: bold;
+  font-size: 13px;
+  flex-grow: 1;
+}
+
+.content {
+  padding: 1rem;
+}
